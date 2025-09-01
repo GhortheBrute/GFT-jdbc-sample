@@ -1,11 +1,13 @@
-package persistance.entity;
+package persistance;
 
-import persistance.ConnectionUtil;
+import persistance.entity.EmployeeEntity;
 
 import java.sql.*;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.util.TimeZone.LONG;
 
 public class EmployeeDAO {
     private static final String INSERT_EMPLOYEE_SQL = """
@@ -27,6 +29,10 @@ public class EmployeeDAO {
 
     private static final String FIND_BY_ID_EMPLOYEE_SQL = """
                 SELECT * FROM employees WHERE id = ?
+            """;
+
+    private static final String INSERT_WITH_PROCEDURE_EMPLOYEE_SQL = """
+                CALL prc_insert_employee(?, ?, ?, ?)
             """;
 
     public void insert(final EmployeeEntity employee) {
@@ -114,6 +120,24 @@ public class EmployeeDAO {
         throw new RuntimeException("Erro ao buscar funcionário (id=" + employeeId + "): ", e);
     }
 }
+
+    public void insertWithProcedure (EmployeeEntity employee) {
+        validateEmployee(employee);
+
+        try(
+                Connection conn = ConnectionUtil.getConnection();
+                CallableStatement stmt = conn.prepareCall(INSERT_WITH_PROCEDURE_EMPLOYEE_SQL)
+                ){
+            stmt.registerOutParameter(1, LONG);
+            stmt.setString(2, employee.getName());
+            stmt.setBigDecimal(3, employee.getSalary());
+            stmt.setTimestamp(4, toTimestamp(employee.getBirthdate()));
+            stmt.execute();
+            employee.setId(stmt.getLong(1));
+        } catch (SQLException e) {
+            throw new RuntimeException("Problema em incluir funcionário com procedimento", e);
+        }
+    }
 
     private static Timestamp toTimestamp(final OffsetDateTime birthdate) {
         // Defensive check, though we validate earlier

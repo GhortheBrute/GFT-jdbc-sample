@@ -3,4 +3,4 @@ CREATE TABLE employees(
     name VARCHAR(150) NOT NULL,
     salary DECIMAL(10,2) NOT NULL,
     age TIMESTAMP NOT NULL
-)engine=INNODB default charset=utf8;
+)engine=INNODB default charset=utf8mb4;

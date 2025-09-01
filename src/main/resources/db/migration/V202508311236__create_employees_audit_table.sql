@@ -8,4 +8,4 @@ CREATE TABLE employees_audit(
     old_birthday TIMESTAMP,
     operation CHAR(1),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-)engine=InnoDB default charset=utf8;
+)engine=InnoDB default charset=utf8mb4;
