@@ -21,8 +21,8 @@ BEGIN
         Old.name,
         NEW.salary,
         Old.salary,
-        NEW.age,
-        OLD.age,
+        NEW.birthday,
+        OLD.birthday,
         'U'
     );
 END;

@@ -5,14 +5,17 @@
     <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/d86a8168-31a2-4aa5-9d4c-09c07345a453/console.sql" value="d86a8168-31a2-4aa5-9d4c-09c07345a453" />
     <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/d86a8168-31a2-4aa5-9d4c-09c07345a453/console_1.sql" value="d86a8168-31a2-4aa5-9d4c-09c07345a453" />
     <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/d86a8168-31a2-4aa5-9d4c-09c07345a453/console_2.sql" value="d86a8168-31a2-4aa5-9d4c-09c07345a453" />
+    <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/d86a8168-31a2-4aa5-9d4c-09c07345a453/console_3.sql" value="d86a8168-31a2-4aa5-9d4c-09c07345a453" />
+    <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/d86a8168-31a2-4aa5-9d4c-09c07345a453/console_4.sql" value="d86a8168-31a2-4aa5-9d4c-09c07345a453" />
     <file url="file://$PROJECT_DIR$/src/main/java/persistance/EmployeeAuditDAO.java" value="4985152e-9693-4b6e-bfbf-a51d658f3b46" />
-    <file url="file://$PROJECT_DIR$/src/main/java/persistance/EmployeeDAO.java" value="4985152e-9693-4b6e-bfbf-a51d658f3b46" />
+    <file url="file://$PROJECT_DIR$/src/main/java/persistance/EmployeeDAO.java" value="d86a8168-31a2-4aa5-9d4c-09c07345a453" />
     <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V202508310903__create_employee_table.sql" value="4985152e-9693-4b6e-bfbf-a51d658f3b46" />
     <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V202508311236__create_employees_audit_table.sql" value="4985152e-9693-4b6e-bfbf-a51d658f3b46" />
     <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V202508311240__add_employee_id_in_employee_audit.sql" value="4985152e-9693-4b6e-bfbf-a51d658f3b46" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V202508311249__create_trigger_insert_employee.sql" value="4985152e-9693-4b6e-bfbf-a51d658f3b46" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V202508311249__create_trigger_insert_employee.sql" value="d86a8168-31a2-4aa5-9d4c-09c07345a453" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V202508311437__create_trigger_update_employee.sql" value="d86a8168-31a2-4aa5-9d4c-09c07345a453" />
     <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V202508311441__create_trigger_delete_employee.sql" value="d86a8168-31a2-4aa5-9d4c-09c07345a453" />
     <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V202508311448__create_view_employee_audit.sql" value="4985152e-9693-4b6e-bfbf-a51d658f3b46" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V202508311454__create_procedure_insert_employee.sql" value="4985152e-9693-4b6e-bfbf-a51d658f3b46" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V202508311454__create_procedure_insert_employee.sql" value="d86a8168-31a2-4aa5-9d4c-09c07345a453" />
   </component>
 </project>

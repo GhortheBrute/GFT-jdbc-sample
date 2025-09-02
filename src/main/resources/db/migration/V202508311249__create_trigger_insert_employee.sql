@@ -16,7 +16,7 @@ BEGIN
         NEW.id,
         NEW.name,
         NEW.salary,
-        NEW.age,
+        NEW.birthday,
         'I'
     );
 END;

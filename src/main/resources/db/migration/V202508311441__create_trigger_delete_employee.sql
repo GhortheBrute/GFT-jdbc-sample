@@ -16,7 +16,7 @@ BEGIN
         OLD.id,
         Old.name,
         Old.salary,
-        OLD.age,
+        OLD.birthday,
         'D'
     );
 END;

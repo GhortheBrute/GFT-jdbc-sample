@@ -8,6 +8,6 @@ CREATE PROCEDURE prc_insert_employee (
 )
 
 BEGIN
-    INSERT INTO employees (name, salary, age) VALUES (p_name, p_salary, p_birthday);
+    INSERT INTO employees (name, salary, birthday) VALUES (p_name, p_salary, p_birthday);
     SET p_id = LAST_INSERT_ID();
 END;

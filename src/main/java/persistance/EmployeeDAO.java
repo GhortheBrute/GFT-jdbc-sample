@@ -11,12 +11,12 @@ import static java.util.TimeZone.LONG;
 
 public class EmployeeDAO {
     private static final String INSERT_EMPLOYEE_SQL = """
-                INSERT INTO employees (name, salary, age)
+                INSERT INTO employees (name, salary, birthday)
                 VALUES (?, ?, ?)
             """;
 
     private static final String UPDATE_EMPLOYEE_SQL = """
-                UPDATE employees SET name = ?, salary = ?, age = ? WHERE id = ?
+                UPDATE employees SET name = ?, salary = ?, birthday = ? WHERE id = ?
             """;
 
     private static final String FIND_ALL_EMPLOYEE_SQL = """
@@ -139,6 +139,28 @@ public class EmployeeDAO {
         }
     }
 
+    public void insertBatch(final List<EmployeeEntity> list) {
+        validateEmployeesList(list);
+
+        try (Connection connection = ConnectionUtil.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(INSERT_EMPLOYEE_SQL, Statement.RETURN_GENERATED_KEYS)) {
+                connection.setAutoCommit(false);
+                for (var employee : list) {
+                    bindEmployeeForInsert(statement, employee);
+                    statement.addBatch();
+                }
+                statement.executeBatch();
+                connection.commit();
+
+            } catch (SQLException e) {
+                connection.rollback();
+                throw new RuntimeException("Erro ao inserir funcionário", e);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao conectar ao banco de dados", e);
+        }
+    }
+
     private static Timestamp toTimestamp(final OffsetDateTime birthdate) {
         // Defensive check, though we validate earlier
         if (birthdate == null) {
@@ -152,7 +174,7 @@ public class EmployeeDAO {
         entity.setId(rs.getLong("id"));
         entity.setName(rs.getString("name"));
         entity.setSalary(rs.getBigDecimal("salary"));
-        Timestamp ts = rs.getTimestamp("age");
+        Timestamp ts = rs.getTimestamp("birthday");
         entity.setBirthdate(toOffsetDateTime(ts));
         return entity;
     }
@@ -165,14 +187,14 @@ public class EmployeeDAO {
     }
 
     private static void bindEmployeeForInsert(PreparedStatement ps, EmployeeEntity e) throws SQLException {
-        // INSERT employees(name=?, salary=?, age=?)
+        // INSERT employees(name=?, salary=?, birthday=?)
         ps.setString(1, e.getName());
         ps.setBigDecimal(2, e.getSalary());
         ps.setTimestamp(3, toTimestamp(e.getBirthdate()));
     }
 
     private static void bindEmployeeForUpdate(PreparedStatement ps, EmployeeEntity e) throws SQLException {
-        // UPDATE employees SET name=?, salary=?, age=? WHERE id=?
+        // UPDATE employees SET name=?, salary=?, birthday=? WHERE id=?
         ps.setString(1, e.getName());
         ps.setBigDecimal(2, e.getSalary());
         ps.setTimestamp(3, toTimestamp(e.getBirthdate()));
@@ -181,16 +203,22 @@ public class EmployeeDAO {
 
     private static void validateEmployee(EmployeeEntity employee) {
         if (employee == null) {
-            throw new IllegalArgumentException("employee must not be null");
+            throw new IllegalArgumentException("Funcionário não pode ser nulo");
         }
         if (employee.getName() == null) {
-            throw new IllegalArgumentException("employee.name must not be null");
+            throw new IllegalArgumentException("Nome de funcionário não informado.");
         }
         if (employee.getSalary() == null) {
-            throw new IllegalArgumentException("employee.salary must not be null");
+            throw new IllegalArgumentException("Salário do funcionário " + employee.getName() + " não informado.");
         }
         if (employee.getBirthdate() == null) {
-            throw new IllegalArgumentException("employee.birthdate must not be null");
+            throw new IllegalArgumentException("Aniversário do funcionário " + employee.getName() + " não informado.");
+        }
+    }
+
+    private static void validateEmployeesList(List<EmployeeEntity> list) {
+        for (EmployeeEntity employee : list) {
+            validateEmployee(employee);
         }
     }
 }

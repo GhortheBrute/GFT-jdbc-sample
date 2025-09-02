@@ -45,6 +45,10 @@ dependencies {
     // Lombok
     compileOnly("org.projectlombok:lombok:$LOMBOK_VERSION")
     annotationProcessor("org.projectlombok:lombok:$LOMBOK_VERSION")
+
+    // Datafaker
+    implementation("net.datafaker:datafaker:2.4.4")
+
 }
 tasks.test {
     useJUnitPlatform()

@@ -4,9 +4,17 @@ import persistance.EmployeeDAO;
 import persistance.entity.EmployeeEntity;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.stream.Stream;
+
+import net.datafaker.Faker;
 
 public class Main {
 
@@ -14,10 +22,12 @@ public class Main {
 
     private final static EmployeeAuditDAO employeeAuditDAO = new EmployeeAuditDAO();
 
+    //private final static Faker faker = new Faker(Locale.of("pt-BR"));
+
     public static Flyway getFlyway() {
         return Flyway.configure().dataSource("jdbc:mysql://localhost/jdbcsample", System.getenv("DB_MYSQL_USER"), System.getenv("DB_MYSQL_PASSWORD"))
                 .baselineOnMigrate(true)
-                .outOfOrder(true)
+                //.outOfOrder(true)
                 .load();
     }
 
@@ -55,7 +65,7 @@ public class Main {
 
 
         //Main.reparar();
-//        Main.migrar();
+        Main.migrar();
 //        adicionarDados();
 
 //        Flyway flyway = Flyway.configure().dataSource("jdbc:mysql://localhost/jdbcsample", System.getenv("DB_MYSQL_USER"), System.getenv("DB_MYSQL_PASSWORD")).load();
@@ -69,6 +79,24 @@ public class Main {
 ////        System.out.println(insert);
 //        employeeDAO.insertWithProcedure(insert);
 ////        System.out.println(insert);
+
+
+
+        var lista = Stream.generate(() -> {
+            EmployeeEntity employee = new EmployeeEntity();
+            Faker faker = new Faker(Locale.forLanguageTag("pt-BR"));
+            employee.setName(faker.name().fullName());
+            employee.setSalary(new BigDecimal(faker.number().randomDouble(2, 1000, 10000)));
+            LocalDate birthDate = faker.date().birthdayLocalDate(18, 54);
+            OffsetDateTime birthday = birthDate.atStartOfDay().atOffset(ZoneOffset.UTC);
+            employee.setBirthdate(birthday);
+
+            return employee;
+        }).limit(4000).toList();
+        employeeDAO.insertBatch(lista);
+
+
+        //System.out.println(teste.name().fullName());
 
         employeeDAO.findAll().forEach(System.out::println);
 
