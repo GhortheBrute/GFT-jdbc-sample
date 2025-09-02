@@ -1,5 +1,6 @@
 package persistance;
 
+import persistance.entity.ContactEntity;
 import persistance.entity.EmployeeEntity;
 
 import java.sql.*;
@@ -159,6 +160,10 @@ public class EmployeeDAO {
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao conectar ao banco de dados", e);
         }
+    }
+
+    public void insertContact(final EmployeeEntity employee, final ContactEntity contact) {
+
     }
 
     private static Timestamp toTimestamp(final OffsetDateTime birthdate) {

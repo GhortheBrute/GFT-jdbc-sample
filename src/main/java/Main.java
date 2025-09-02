@@ -1,6 +1,8 @@
 import org.flywaydb.core.Flyway;
+import persistance.ContactDAO;
 import persistance.EmployeeAuditDAO;
 import persistance.EmployeeDAO;
+import persistance.entity.ContactEntity;
 import persistance.entity.EmployeeEntity;
 
 import java.math.BigDecimal;
@@ -22,7 +24,9 @@ public class Main {
 
     private final static EmployeeAuditDAO employeeAuditDAO = new EmployeeAuditDAO();
 
-    //private final static Faker faker = new Faker(Locale.of("pt-BR"));
+    private final static Faker faker = new Faker(Locale.of("pt-BR"));
+
+    private final static ContactDAO contactDAO = new ContactDAO();
 
     public static Flyway getFlyway() {
         return Flyway.configure().dataSource("jdbc:mysql://localhost/jdbcsample", System.getenv("DB_MYSQL_USER"), System.getenv("DB_MYSQL_PASSWORD"))
@@ -65,7 +69,7 @@ public class Main {
 
 
         //Main.reparar();
-        Main.migrar();
+//        Main.migrar();
 //        adicionarDados();
 
 //        Flyway flyway = Flyway.configure().dataSource("jdbc:mysql://localhost/jdbcsample", System.getenv("DB_MYSQL_USER"), System.getenv("DB_MYSQL_PASSWORD")).load();
@@ -76,29 +80,31 @@ public class Main {
 //        insert.setName("Sophie");
 //        insert.setSalary(new BigDecimal("140000.00"));
 //        insert.setBirthdate(OffsetDateTime.now().minusYears(30));
-////        System.out.println(insert);
+//        System.out.println("ANTES\n" + insert);
 //        employeeDAO.insertWithProcedure(insert);
-////        System.out.println(insert);
+//        System.out.println("DEPOIS\n" + insert);
 
 
 
-        var lista = Stream.generate(() -> {
-            EmployeeEntity employee = new EmployeeEntity();
-            Faker faker = new Faker(Locale.forLanguageTag("pt-BR"));
-            employee.setName(faker.name().fullName());
-            employee.setSalary(new BigDecimal(faker.number().randomDouble(2, 1000, 10000)));
-            LocalDate birthDate = faker.date().birthdayLocalDate(18, 54);
-            OffsetDateTime birthday = birthDate.atStartOfDay().atOffset(ZoneOffset.UTC);
-            employee.setBirthdate(birthday);
-
-            return employee;
-        }).limit(4000).toList();
-        employeeDAO.insertBatch(lista);
+//        var lista = Stream.generate(() -> {
+//            EmployeeEntity employee = new EmployeeEntity();
+////            Faker faker = new Faker(Locale.forLanguageTag("pt-BR"));
+//            employee.setName(faker.name().fullName());
+//            employee.setSalary(new BigDecimal(faker.number().randomDouble(2, 1000, 10000)));
+//            LocalDate birthDate = faker.date().birthdayLocalDate(18, 54);
+//            OffsetDateTime birthday = birthDate.atStartOfDay().atOffset(ZoneOffset.UTC);
+//            employee.setBirthdate(birthday);
+//
+//            return employee;
+//        }).limit(4000).toList();
+//        employeeDAO.insertBatch(lista);
 
 
         //System.out.println(teste.name().fullName());
 
-        employeeDAO.findAll().forEach(System.out::println);
+
+
+//        employeeDAO.findAll().forEach(System.out::println);
 
 //        var updateEmployee = new EmployeeEntity();
 //        updateEmployee.setName("João");
@@ -120,5 +126,11 @@ public class Main {
 //
 //        System.out.println("Listando");
 //        employeeDAO.findAll().forEach(System.out::println);
+
+        var contact = new ContactEntity();
+        contact.setDescription("mirella@email.com");
+        contact.setType("e-mail");
+        contact.setEmployee(employeeDAO.findById(1L));
+        contactDAO.insert(contact);
     }
 }

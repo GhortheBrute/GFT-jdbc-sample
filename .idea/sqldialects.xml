@@ -9,6 +9,7 @@
     <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V202508311441__create_trigger_delete_employee.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V202508311448__create_view_employee_audit.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V202508311454__create_procedure_insert_employee.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V202509021644__create_contact_table.sql" dialect="MySQL" />
     <file url="PROJECT" dialect="MySQL" />
   </component>
 </project>

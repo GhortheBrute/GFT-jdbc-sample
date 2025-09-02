@@ -13,6 +13,6 @@ public class ConnectionUtil {
     public static Connection getConnection() throws SQLException {
         String user = System.getenv("DB_MYSQL_USER");
         String password = System.getenv("DB_MYSQL_PASSWORD");
-        return DriverManager.getConnection("jdbc:mysql://localhost/jdbcsample",user,password);
+        return DriverManager.getConnection("jdbc:mysql://localhost/jdbcsample?useUnicode=true&characterEncoding=UTF-8",user,password);
     }
 }

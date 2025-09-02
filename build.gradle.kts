@@ -8,7 +8,7 @@ val MYSQL_DRIVER_VERSION = "8.2.0"
 val LOMBOK_VERSION = "1.18.38"
 val JUNIT_BOM_VERSION = "5.13.4"
 
-val DB_URL = "jdbc:mysql://localhost/jdbcsample"
+val DB_URL = "jdbc:mysql://localhost/jdbcsample?useUnicode=true&characterEncoding=UTF-8"
 val ENV_DB_USER = "DB_MYSQL_USER"
 val ENV_DB_PASSWORD = "DB_MYSQL_PASSWORD"
 
